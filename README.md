@@ -13,7 +13,7 @@ Emacs Modular Configuration lets you split your emacs configuration within of a 
 
     (load ~/.emacs.d/config)
 
-**Note:** the directory tree *`~/.emacs.d/config`* will be visit recursively using the [BFS alghoritm](https://en.wikipedia.org/wiki/Breadth-first_search) and in alphabetical order.
+**Note:** the directory tree *`~/.emacs.d/config`* will be visited recursively using the [BFS algorithm](https://en.wikipedia.org/wiki/Breadth-first_search) and in alphabetical order.
 
 Installing
 ----------
