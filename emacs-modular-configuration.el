@@ -41,7 +41,7 @@
 ;;
 ;; Copy this file in a directory which is in the Emacs `load-path', so add this
 ;; to your Emacs initalization file (e.g. "~/.emacs" or "~/.emacs.d/init.el"):
-;; (require 'emacs-modular-configuration)
+;; (require 'modular-configuration)
 ;; (load ~/.emacs.d/config t)
 ;;
 ;;; Usage:
@@ -54,31 +54,33 @@
 ;;
 ;; Customization:
 ;;
-;; M-x customize-group and then "emacs-modular-configuration"
+;; M-x customize-group and then "modular-configuration"
 ;;
 ;;; Code:
 
 ;; Definitions
-;;;###autoload
-(defgroup emacs-modular-configuration nil
+(defgroup add-ons nil
+  "External add-ons."
+  :group 'emacs)
+
+(defgroup modular-configuration nil
   "Making modular your config file."
+  :group 'add-ons
   :version "1.0"
   :prefix "emc")
 
 (defvar emc-version "1.0")
 
 ;; Customization
-;;;###autoload
 (defcustom emc-config-directory "~/.emacs.d/config"
   "Directory tree that contains all your configuration files."
   :type 'directory
-  :group 'emacs-modular-configuration)
+  :group 'modular-configuration)
 
-;;;###autoload
 (defcustom emc-config-file "~/.emacs.d/config.el"
   "File where all your configuration files will be merged."
   :type 'file
-  :group 'emacs-modular-configuration)
+  :group 'modular-configuration)
 
 ;; Functions
 (defun emc-recursive-directory (directory function)
@@ -134,4 +136,5 @@ Whereupon, the `emc-config-file' will also byte-compiled"
     (byte-compile-file emc-config-file)))
 
 (provide 'emacs-modular-configuration)
+
 ;;; emacs-modular-configuration.el ends here
