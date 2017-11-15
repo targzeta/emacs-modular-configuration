@@ -18,7 +18,7 @@
 ;; This file is NOT part of GNU Emacs.
 ;;
 ;; Author: Emanuele Tomasi <targzeta@gmail.com>
-;; Version: 0.1
+;; Version: 1.0
 ;; URL: https://github.com/targzeta/emacs-modular-configuration
 ;; Maintainer: Emanuele Tomasi <targzeta@gmail.com>
 ;; Keywords: modular, config
@@ -62,10 +62,10 @@
 ;;;###autoload
 (defgroup emacs-modular-configuration nil
   "Making modular your config file."
-  :version "0.1"
+  :version "1.0"
   :prefix "emc")
 
-(defvar emc-version "0.1")
+(defvar emc-version "1.0")
 
 ;; Customization
 ;;;###autoload
