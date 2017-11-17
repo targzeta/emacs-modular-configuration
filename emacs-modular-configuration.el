@@ -88,7 +88,7 @@
   (let (dirs-list (list))
     (dolist (element (directory-files-and-attributes directory))
       (let* ((path (car element))
-             (fullpath (concat directory "/" path))
+             (fullpath (format "%s/%s" directory path))
              (isdir (car (cdr element)))
              (ignore-dir (or (string= path ".") (string= path ".."))))
         (cond
@@ -115,9 +115,8 @@ Whereupon, the `emc-config-file' will also byte-compiled"
                  "' directory tree,\n"
                  ";; then run within emacs"
                  " 'M-x emc-merge-config-files'\n\n"))
-        (footer (concat
-                 ";; " emc-config-file " ends here"))
-        (separator (concat ";; " (make-string 76 ?#))))
+        (footer (format ";; %s ends here" emc-config-file))
+        (separator (format ";; %s" (make-string 76 ?#))))
 
     (emc-recursive-directory emc-config-directory
                              (lambda (filename)
@@ -126,11 +125,11 @@ Whereupon, the `emc-config-file' will also byte-compiled"
     (with-temp-buffer
       (insert header)
       (dolist (filename (reverse files_list))
-        (message "%s" (concat "[emc] Merging " filename))
-        (insert (concat separator "\n;; Config file: " filename "\n"))
+        (message "%s" (format "[emc] Merging %s" filename))
+        (insert (format "%s\n;; Config file: %s\n" separator filename))
         (insert-file-contents filename)
         (goto-char (point-max))
-        (insert (concat separator "\n\n\n")))
+        (insert (format "%s\n\n\n" separator)))
       (insert footer)
       (write-file emc-config-file))
     (byte-compile-file emc-config-file)))
