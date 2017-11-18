@@ -88,12 +88,12 @@
   (let (dirs-list (list))
     (dolist (element (directory-files-and-attributes directory))
       (let* ((path (car element))
-             (fullpath (format "%s/%s" directory path))
+             (fullpath (concat directory path))
              (isdir (car (cdr element)))
              (ignore-dir (or (string= path ".") (string= path ".."))))
         (cond
          ((and (eq isdir t) (not ignore-dir))
-          (push fullpath dirs-list))
+          (push (file-name-as-directory fullpath) dirs-list))
          ((eq isdir nil)
           (funcall function fullpath)))))
     (dolist (dir dirs-list)
@@ -118,7 +118,7 @@ Whereupon, the `emc-config-file' will also byte-compiled"
         (footer (format ";; %s ends here" emc-config-file))
         (separator (format ";; %s" (make-string 76 ?#))))
 
-    (emc-recursive-directory emc-config-directory
+    (emc-recursive-directory (file-name-as-directory emc-config-directory)
                              (lambda (filename)
                                (if (string= (substring filename -3) ".el")
                                    (push filename files_list))))
