@@ -83,21 +83,27 @@
   :group 'modular-configuration)
 
 ;; Functions
-(defun emc-recursive-directory (directory function)
-  "Execute FUNCTION for every files under DIRECTORY tree."
-  (let (dirs-list (list))
-    (dolist (element (directory-files-and-attributes directory))
-      (let* ((path (car element))
-             (fullpath (concat directory path))
-             (isdir (car (cdr element)))
-             (ignore-dir (or (string= path ".") (string= path ".."))))
-        (cond
-         ((and (eq isdir t) (not ignore-dir))
-          (push (file-name-as-directory fullpath) dirs-list))
-         ((eq isdir nil)
-          (funcall function fullpath)))))
-    (dolist (dir dirs-list)
-      (emc-recursive-directory dir function))))
+(defun emc-recursive-directory (nodes function)
+  "Executes FUNCTION for every file under the DIRECTORY tree.
+
+The DIRECTORY will be visited recursively using the Breadth First
+algorithm with every level in alphabetical order.
+
+\n(fn DIRECTORY FUNCTION)"
+  (unless (listp nodes) (setq nodes (list nodes)))
+  (let ((directory (pop nodes)))
+    (when directory
+      (dolist (element (directory-files-and-attributes directory))
+        (let* ((path (car element))
+               (fullpath (concat directory path))
+               (isdir (car (cdr element)))
+               (ignore-dir (or (string= path ".") (string= path ".."))))
+          (cond
+           ((and (eq isdir t) (not ignore-dir))
+            (push (file-name-as-directory fullpath) nodes))
+           ((not isdir)
+            (funcall function fullpath)))))
+      (emc-recursive-directory (reverse nodes) function))))
 
 ;;;###autoload
 (defun emc-merge-config-files ()
