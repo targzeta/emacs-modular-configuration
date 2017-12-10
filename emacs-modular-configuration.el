@@ -1,6 +1,14 @@
 ;;; emacs-modular-configuration.el --- making modular your config file
 ;;
-;; Copyright (C) 2014 Emanuele Tomasi <targzeta@gmail.com>
+;; Copyright (C) 2014-2017 Emanuele Tomasi <targzeta@gmail.com>
+;;
+;; Author: Emanuele Tomasi <targzeta@gmail.com>
+;; URL: https://github.com/targzeta/emacs-modular-configuration
+;; Maintainer: Emanuele Tomasi <targzeta@gmail.com>
+;; Keywords: modular, config
+;; Version: 1.0
+;;
+;; This file is NOT part of GNU Emacs.
 ;;
 ;; This program is free software: you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as
@@ -15,18 +23,10 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program. If not, see <http://www.gnu.org/licenses/>.
 ;;
-;; This file is NOT part of GNU Emacs.
-;;
-;; Author: Emanuele Tomasi <targzeta@gmail.com>
-;; Version: 1.0
-;; URL: https://github.com/targzeta/emacs-modular-configuration
-;; Maintainer: Emanuele Tomasi <targzeta@gmail.com>
-;; Keywords: modular, config
-;;
 ;;; Commentary:
 ;;
-;; Emacs Modular Configuration lets you split your emacs configuration within
-;; of a (configurable) "~/.emacs.d/config" directory. When you're ready,
+;; Emacs Modular Configuration lets you split your Emacs configuration within
+;; of a (configurable) "~/.emacs.d/config" directory.  When you're ready,
 ;; simply call `emc-merge-config-files' and all the ".el" files under that
 ;; directory tree will merge on a (configurable) "~/.emacs.d/config.el".
 ;; Lastly, this file will be byte compiled, so all you need to write on your
