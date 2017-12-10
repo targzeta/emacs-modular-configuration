@@ -105,9 +105,25 @@ algorithm with every level in alphabetical order.
             (funcall function fullpath)))))
       (emc-recursive-directory (reverse nodes) function))))
 
+(defun emc--merge-file (filename)
+  (when (string= (file-name-extension filename) "el")
+    (message "%s" (format "[emc] Merging %s" filename))
+    (insert (format "%s\n;; Config file: %s\n" separator filename))
+    (insert-file-contents filename)
+    (goto-char (point-max))
+    (insert (format "%s\n\n\n" separator))))
+
+(defun emc--merge-files-and-compile (src-dir dest-file header separator footer)
+  (with-temp-buffer
+    (insert header)
+    (emc-recursive-directory (file-name-as-directory src-dir) 'emc--merge-file)
+    (insert footer)
+    (write-file dest-file))
+  (byte-compile-file dest-file))
+
 ;;;###autoload
 (defun emc-merge-config-files ()
-  "Merge all `.el' files under `emc-config-directory' on `emc-config-file'.
+  "Merges all `.el' files under `emc-config-directory' on `emc-config-file'.
 Whereupon, the `emc-config-file' will also byte-compiled"
   (interactive)
   (let ((files_list)
@@ -121,24 +137,11 @@ Whereupon, the `emc-config-file' will also byte-compiled"
                  "' directory tree,\n"
                  ";; then run within emacs"
                  " 'M-x emc-merge-config-files'\n\n"))
-        (footer (format ";; %s ends here" emc-config-file))
-        (separator (format ";; %s" (make-string 76 ?#))))
+        (separator (format ";; %s" (make-string 76 ?#)))
+        (footer (format ";; %s ends here" emc-config-file)))
 
-    (emc-recursive-directory (file-name-as-directory emc-config-directory)
-                             (lambda (filename)
-                               (if (string= (substring filename -3) ".el")
-                                   (push filename files_list))))
-    (with-temp-buffer
-      (insert header)
-      (dolist (filename (reverse files_list))
-        (message "%s" (format "[emc] Merging %s" filename))
-        (insert (format "%s\n;; Config file: %s\n" separator filename))
-        (insert-file-contents filename)
-        (goto-char (point-max))
-        (insert (format "%s\n\n\n" separator)))
-      (insert footer)
-      (write-file emc-config-file))
-    (byte-compile-file emc-config-file)))
+    (emc--merge-files-and-compile emc-config-directory emc-config-file header
+                                  separator footer)))
 
 (provide 'emacs-modular-configuration)
 
