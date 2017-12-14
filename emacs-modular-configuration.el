@@ -114,11 +114,10 @@ algorithm with every level in alphabetical order.
     (insert (format "%s\n\n\n" separator))))
 
 (defun emc--merge-files-and-compile (src-dir dest-file header separator footer)
-  (with-temp-buffer
+  (with-temp-file dest-file
     (insert header)
     (emc-recursive-directory (file-name-as-directory src-dir) 'emc--merge-file)
-    (insert footer)
-    (write-file dest-file))
+    (insert footer))
   (byte-compile-file dest-file))
 
 ;;;###autoload
