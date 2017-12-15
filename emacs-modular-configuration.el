@@ -84,7 +84,7 @@
 
 ;; Functions
 (defun emc-recursive-directory (nodes function)
-  "Executes FUNCTION for every file under the DIRECTORY tree.
+  "Executes FUNCTION for every '.el' file under the DIRECTORY tree.
 
 The DIRECTORY will be visited recursively using the Breadth First
 algorithm with every level in alphabetical order.
@@ -101,17 +101,16 @@ algorithm with every level in alphabetical order.
           (cond
            ((and (eq isdir t) (not ignore-dir))
             (push (file-name-as-directory fullpath) nodes))
-           ((not isdir)
+           ((and (string= (file-name-extension path) "el") (not (eq isdir t)))
             (funcall function fullpath)))))
       (emc-recursive-directory (reverse nodes) function))))
 
 (defun emc--merge-file (filename)
-  (when (string= (file-name-extension filename) "el")
-    (message "%s" (format "[emc] Merging %s" filename))
-    (insert (format "%s\n;; Config file: %s\n" separator filename))
-    (insert-file-contents filename)
-    (goto-char (point-max))
-    (insert (format "%s\n\n\n" separator))))
+  (message "%s" (format "[emc] Merging %s" filename))
+  (insert (format "%s\n;; Config file: %s\n" separator filename))
+  (insert-file-contents filename)
+  (goto-char (point-max))
+  (insert (format "%s\n\n\n" separator)))
 
 (defun emc--merge-files-and-compile (src-dir dest-file header separator footer)
   (with-temp-file dest-file
