@@ -107,7 +107,7 @@ algorithm with every level in alphabetical order.
       (emc-recursive-directory (reverse nodes) function))))
 
 (defun emc--merge-file (filename)
-  (message "%s" (format "[emc] Merging %s" filename))
+  (message (format "[emc] Merging %s" filename))
   (insert (format "\n;;; Config file: %s\n" filename))
   (insert-file-contents filename)
   (goto-char (point-max))
