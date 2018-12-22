@@ -26,31 +26,32 @@
 ;;; Commentary:
 ;;
 ;; Emacs Modular Configuration lets you split your Emacs configuration within
-;; of a (configurable) "~/.emacs.d/config" directory.  When you're ready,
+;; of a (configurable) "~/.emacs.d/emc/config" directory. When you're ready,
 ;; simply call `emc-merge-config-files' and all the ".el" files under that
-;; directory tree will merge on a (configurable) "~/.emacs.d/emc-config.el".
-;; Lastly, this file will be byte compiled, so all you need to write on your
-;; Emacs initalization file (e.g. "~/.emacs" or "~/.emacs.d/init.el") is:
+;; directory tree will merge on a (configurable)
+;; "~/.emacs.d/emc/emc-config.el".  Lastly, this file will be byte compiled, so
+;; all you need to write on your Emacs initalization file (e.g. "~/.emacs" or
+;; "~/.emacs.d/init.el") is:
 ;;
-;; (load "~/.emacs.d/emc-config")
+;; (load "~/.emacs.d/emc/emc-config")
 ;;
-;; Note: the directory tree ~/.emacs.d/config will be visited recursively using
-;; the BFS algorithm and in alphabetical order.
+;; Note: the directory tree ~/.emacs.d/emc/config will be visited recursively
+;; using the BFS algorithm and in alphabetical order.
 ;;
 ;;; Installation:
 ;;
 ;; Copy this file in a directory which is in the Emacs `load-path', so add this
 ;; to your Emacs initalization file (e.g. "~/.emacs" or "~/.emacs.d/init.el"):
 ;; (require 'emacs-modular-configuration)
-;; (load ~/.emacs.d/emc-config t)
+;; (load ~/.emacs.d/emc/emc-config t)
 ;;
 ;;; Usage:
 ;;
-;; Write a bit of ".el" files within "~/.emacs.d/config" directory tree and
+;; Write a bit of ".el" files within "~/.emacs.d/emc/config" directory tree and
 ;; then run M-x emc-merge-config-files.
 ;;
-;; Next time you start Emacs, you'll load the "~/.emacs.d/emc-config.elc" file.
-;; That's all.
+;; Next time you start Emacs, you'll load the "~/.emacs.d/emc/emc-config.elc"
+;; file. That's all.
 ;;
 ;; Customization:
 ;;
@@ -72,12 +73,12 @@
 (defvar emc-version "1.0")
 
 ;; Customization
-(defcustom emc-config-directory "~/.emacs.d/config"
+(defcustom emc-config-directory "~/.emacs.d/emc/config"
   "Directory tree that contains all your configuration files."
   :type 'directory
   :group 'modular-configuration)
 
-(defcustom emc-config-file "~/.emacs.d/emc-config.el"
+(defcustom emc-config-file "~/.emacs.d/emc/emc-config.el"
   "File where all your configuration files will be merged."
   :type 'file
   :group 'modular-configuration)
