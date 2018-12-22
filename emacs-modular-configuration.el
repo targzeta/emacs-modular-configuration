@@ -58,6 +58,7 @@
 ;; M-x customize-group and then "modular-configuration"
 ;;
 ;;; Code:
+(require 'cl)
 
 ;; Definitions
 (defgroup add-ons nil
@@ -121,10 +122,19 @@ algorithm with every level in alphabetical order.
   (byte-compile-file dest-file))
 
 ;;;###autoload
-(defun emc-merge-config-files ()
+(defun* emc-merge-config-files ()
   "Merges all `.el' files under `emc-config-directory' on `emc-config-file'.
 Whereupon, the `emc-config-file' will also byte-compiled"
   (interactive)
+  (unless (file-exists-p emc-config-directory)
+    (message (format "[emc] %s not found. Nothing to do!"
+                     emc-config-directory))
+    (return-from emc-merge-config-files))
+
+  ; Ensuring destination directory
+  (mkdir (file-name-directory emc-config-file) t)
+
+  (message (format "[emc] Config file will merge into %s" emc-config-file))
   (let ((header (concat
                  ";; -*- eval: (read-only-mode 1) -*-\n\n"
                  ";;; " emc-config-file " -- Emacs configurations\n\n"
