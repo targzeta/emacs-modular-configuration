@@ -122,7 +122,7 @@ algorithm with every level in alphabetical order.
   (byte-compile-file dest-file))
 
 ;;;###autoload
-(defun* emc-merge-config-files ()
+(cl-defun emc-merge-config-files ()
   "Merges all `.el' files under `emc-config-directory' on `emc-config-file'.
 Whereupon, the `emc-config-file' will also byte-compiled"
   (interactive)
