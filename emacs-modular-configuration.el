@@ -58,7 +58,7 @@
 ;; M-x customize-group and then "modular-configuration"
 ;;
 ;;; Code:
-(require 'cl)
+(require 'cl-lib)
 
 ;; Definitions
 (defgroup add-ons nil
@@ -129,7 +129,7 @@ Whereupon, the `emc-config-file' will also byte-compiled"
   (unless (file-exists-p emc-config-directory)
     (message (format "[emc] %s not found. Nothing to do!"
                      emc-config-directory))
-    (return-from emc-merge-config-files))
+    (cl-return-from emc-merge-config-files))
 
   ; Ensuring destination directory
   (mkdir (file-name-directory emc-config-file) t)
